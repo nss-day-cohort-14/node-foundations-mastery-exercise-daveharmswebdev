@@ -9,7 +9,6 @@ const limitToTen = require('./limit-to-ten')
 const [,,...args] = process.argv
 
 if (typeof args[0] !== 'undefined') {
-  console.log('yeah', args[0])
   fs.readFile('words/en.txt', 'utf8', (err,data) => {
     if (err) throw err
     rtw(data)
@@ -19,5 +18,15 @@ if (typeof args[0] !== 'undefined') {
 }
 
 function rtw(data) {
-  console.log(limitToTen(data))
+  readStream._read = () => {
+    readStream.push(args[0])
+    readStream.push(null)
+  }
+
+  writeStream._write = (buffer, _, cb) => {
+    process.stdout.write(buffer.toString())
+    cb()
+  }
+
+  readStream.pipe(writeStream)
 }
