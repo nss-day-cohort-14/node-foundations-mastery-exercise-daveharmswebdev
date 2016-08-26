@@ -4,7 +4,8 @@ const { Readable, Writable } = require('stream')
 const fs = require('fs')
 const readStream = Readable()
 const writeStream = Writable()
-const transStream = require('./limit-to-ten')
+const limitToTen = require('./limit-to-ten')
+// console.log(limitToTen)S
 const [,,...args] = process.argv
 
 if (typeof args[0] !== 'undefined') {
@@ -22,6 +23,8 @@ function rtw(data) {
     readStream.push(null)
   }
 
+  let transStream = limitToTen.trans(data)
+  
   writeStream._write = (buffer, _, cb) => {
     process.stdout.write(buffer.toString())
     cb()
