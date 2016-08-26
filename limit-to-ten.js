@@ -3,16 +3,14 @@
 const { Transform } = require('stream')
 const transStream = Transform()
 
-function trans(data) {
+function trans(searchTerm) {
+  console.log(searchTerm)
   transStream._transform = (buffer, _, cb) => {
-    data = data.toLowerCase().split('\n').filter( word => {
-      let searchterm = buffer.toString()
-      if (searchterm === word.slice(0, searchterm.length)) {
-        return word
-      }
-    })
-    data = data.slice(0,10)
-    cb(null, `${data}`)
+    let output
+    // if (buffer.toString().toLowerCase().slice(0, searchTerm.length) === searchTerm) {
+      output = buffer.toString()
+    // }
+    cb(null, output)
   }
   return transStream
 }
