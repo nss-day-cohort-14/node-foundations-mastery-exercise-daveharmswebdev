@@ -1,11 +1,10 @@
 'use strict'
 
-const { Readable, Writable, Transform } = require('stream')
+const { Readable, Writable } = require('stream')
 const fs = require('fs')
 const readStream = Readable()
 const writeStream = Writable()
-const transStream = Transform()
-const limitToTen = require('./limit-to-ten')
+const transStream = require('./limit-to-ten')
 const [,,...args] = process.argv
 
 if (typeof args[0] !== 'undefined') {
@@ -28,5 +27,5 @@ function rtw(data) {
     cb()
   }
 
-  readStream.pipe(writeStream)
+  readStream.pipe(transStream).pipe(writeStream)
 }

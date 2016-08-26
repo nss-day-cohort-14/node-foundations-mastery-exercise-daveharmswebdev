@@ -1,6 +1,10 @@
 'use strict'
 
-module.exports = function(data) {
-  data = data.split('\n')
-  return data.length
+const { Transform } = require('stream')
+const transStream = Transform()
+
+transStream._transform = (buffer, _, cb) => {
+  cb(null, `${buffer.toString().toUpperCase()}`)
 }
+
+module.exports = transStream
