@@ -8,8 +8,9 @@ function trans(searchTerm) {
   transStream._transform = (buffer, _, cb) => {
     let output
     // if (buffer.toString().toLowerCase().slice(0, searchTerm.length) === searchTerm) {
+    if (true) {
       output = buffer.toString()
-    // }
+    }
     cb(null, output)
   }
   return transStream
