@@ -8,4 +8,9 @@ const transStream = Transform()
 
 const [,,...args] = process.argv
 
-console.log(args[0])
+
+if (typeof args[0] !== 'undefined') {
+  console.log('yeah', args[0])
+} else {
+  console.log('Usage: word-search.js [searchterm]')
+}
