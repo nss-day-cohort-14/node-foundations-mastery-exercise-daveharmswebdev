@@ -2,30 +2,17 @@
 
 const { Transform } = require('stream')
 const transStream = Transform()
+let i = 0
+let output
 
-function trans(searchTerm) {
-  console.log(searchTerm)
-  transStream._transform = (buffer, _, cb) => {
-    let output
-    // if (buffer.toString().toLowerCase().slice(0, searchTerm.length) === searchTerm) {
-    if (true) {
-      output = buffer.toString()
-    }
-    cb(null, output)
+transStream._transform = (buffer, _, cb) => {
+  if (buffer.toString().length > 0) i++
+  if (i < 11) {
+    output = buffer.toString()
+  } else {
+    output = ''
   }
-  return transStream
+  cb(null, `${output}`)
 }
 
-module.exports = { trans }
-
-
-// transformStream._transform = (buffer, _, cb) => {
-//   data = data.split('\n').filter( word => {
-//     let test = buffer.toString()
-//     if (test === word.slice(0, test.length)) {
-//       return word
-//     }
-//   })
-//   let output = `${data}`
-//   cb(null, output)
-// }
+module.exports = transStream
