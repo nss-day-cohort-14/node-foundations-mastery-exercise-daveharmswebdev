@@ -19,12 +19,12 @@ if (typeof args[0] !== 'undefined') {
 
 function rtw(data) {
   readStream._read = () => {
-    readStream.push(args[0])
+    readStream.push(args[0].toLowerCase())
     readStream.push(null)
   }
 
   let transStream = limitToTen.trans(data)
-  
+
   writeStream._write = (buffer, _, cb) => {
     process.stdout.write(buffer.toString())
     cb()
